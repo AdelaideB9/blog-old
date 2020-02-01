@@ -31,13 +31,12 @@ github_username:  cyanicdev
 timezone: Adelaide/Australia
 
 # Build settings
-theme: minima
+remote_theme: javadhamidi/bones
+#theme: minima
 plugins:
   - jekyll-feed
   - jekyll-remote-theme
 
-
-remote_theme: javadhamidi/bones
 
 # Exclude from processing.
 # The following items will not be processed, by default.
