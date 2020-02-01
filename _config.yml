@@ -31,7 +31,7 @@ github_username:  cyanicdev
 timezone: Adelaide/Australia
 
 # Build settings
-remote_theme: javadhamidi/bones
+remote_theme: daviddarnes/alembic
 #theme: minima
 plugins:
   - jekyll-feed
