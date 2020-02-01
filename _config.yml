@@ -34,6 +34,10 @@ timezone: Adelaide/Australia
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-remote-theme
+
+
+remote_theme: javadhamidi/bones
 
 # Exclude from processing.
 # The following items will not be processed, by default.
