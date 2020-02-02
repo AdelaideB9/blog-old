@@ -39,8 +39,6 @@ collections:
   posts:
     output: true
     permalink: /:categories/:name
-  authors:
-    output: true
 
 
 # Exclude from processing.
