@@ -38,7 +38,7 @@ plugins:
 collections:
   posts:
     output: true
-    permalink: /:collection/:name
+    permalink: /:category/:name
   authors:
     output: true
 
