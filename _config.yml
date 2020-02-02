@@ -31,6 +31,7 @@ github_username:  cyanicdev
 timezone: Adelaide/Australia
 
 # Build settings
+markdown: kramdown
 remote_theme: javadhamidi/bones
 plugins:
   - jekyll-feed
