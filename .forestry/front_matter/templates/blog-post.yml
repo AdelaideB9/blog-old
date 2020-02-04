@@ -5,15 +5,32 @@ fields:
 - type: text
   name: layout
   label: layout
+  default: post
+  hidden: true
+  config:
+    required: true
 - type: text
-  name: title
+  name: Title
   label: title
+  config:
+    required: true
 - type: datetime
   name: date
   label: date
+  config:
+    date_format: DD/MM/YYYY
+    display_utc: false
+    export_format: YYYY-MM-DD h:mm A ZZ
+    time_format: h:mm A ZZ
+    required: true
+  default: now
 - type: text
-  name: author
+  name: Author
   label: author
+  config:
+    required: true
 - type: list
-  name: categories
+  name: Categories
   label: categories
+  config:
+    use_select: false
