@@ -37,10 +37,9 @@ fields:
       file: 
       path: 
   label: author
-- type: list
-  name: Categories
+- name: Categories
+  type: tag_list
+  default: []
   label: categories
-  config:
-    use_select: false
 pages:
 - _posts/2020-01-24-welcome-to-jekyll.markdown
