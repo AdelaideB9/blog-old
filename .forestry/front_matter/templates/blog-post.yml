@@ -43,6 +43,11 @@ fields:
   label: Tags
   description: Please put the root tag first. The tag order affects the URL of the
     post.
+- name: header_img
+  type: text
+  config:
+    required: false
+  label: Header Image URL
 pages:
 - _posts/2020-01-24-welcome-to-jekyll.markdown
 - _posts/2020-04-04-neverlan-ctf-2020.md
