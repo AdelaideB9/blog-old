@@ -19,4 +19,8 @@ The first thing we need to know is how the browser can determine what type of cl
 
 <script src="[https://gist.github.com/javadhamidi/889226036803bab244ae41b127dc0ab3.js](https://gist.github.com/javadhamidi/889226036803bab244ae41b127dc0ab3.js "https://gist.github.com/javadhamidi/889226036803bab244ae41b127dc0ab3.js")"></script> 
 
-Next we have to figure out what our user-agent string should actually be. If we pass 'commodo 64' as the user-agent parameter of our function nothing changes. Googling commodo 64, we get results for the 
+Next we have to figure out what our user-agent string should actually be. If we pass 'commodo 64' as the user-agent parameter of our function nothing changes. Googling commodo 64, we get results for the 1982 computer, The Commodore 64, but making that the header doesn't work either. The part of the challenge we're forgeting is that the site requires `browsers that run on commodo 64`. We need to find the header of a browser that works on the Commodore 64 ...
+
+... here's one! `Hyperlink/2.5e (Commodore 64)`
+
+Put that into our function and we get `Welcome fellow c64 user. flag{8b1t_w3b}`
