@@ -1,6 +1,6 @@
 ---
 layout =  "post"
-titl = "NeverLAN CTF 2020 Write-up"
+title = "NeverLAN CTF 2020 Write-up"
 date: = "2020-02-09 01:00:10 +1030"
 author = "javad"
 categories = [ "ctf", "writeups" ]
