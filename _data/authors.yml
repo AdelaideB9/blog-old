@@ -8,6 +8,9 @@ ben:
     position: King of Underworld
     description: "Desire shouldn't be contained... it's unatural."
 archer:
-     name: Archer Gardiner-Sheridan
-     position: iOS Developer
-     description: "I make cool apps. Please download love."
+    name: Archer Gardiner-Sheridan
+    position: iOS Developer
+    description: "I make cool apps. Please download love."
+dotjam:
+    name: dotjam
+    description: "Our team name for competitions; CTFs, hackathons, programming challenges, maybe other stuff too.
