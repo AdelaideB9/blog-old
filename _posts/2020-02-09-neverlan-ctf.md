@@ -24,3 +24,13 @@ Next we have to figure out what our user-agent string should actually be. If we 
 ... here's one! `Hyperlink/2.5e (Commodore 64)`
 
 Put that into our function and we get `Welcome fellow c64 user. flag{8b1t_w3b}`
+
+## Robot Talk
+
+We found the best way to comunicate with [challenges.neverlanctf.com:1120](challenges.neverlanctf.com:1120 "challenges.neverlanctf.com:1120") was through Telnet!
+
+Here's the handy script we made ...
+
+<script src="[https://gist.github.com/javadhamidi/5edbe8981351b9213bad90cd38135a0d.js](https://gist.github.com/javadhamidi/5edbe8981351b9213bad90cd38135a0d.js "https://gist.github.com/javadhamidi/5edbe8981351b9213bad90cd38135a0d.js")"></script>
+
+... and here's the outputted flag `flag{Ant1_hum4n}`
