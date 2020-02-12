@@ -35,6 +35,7 @@ markdown: kramdown
 remote_theme: cyanicdev/bones
 plugins:
   - jekyll-feed
+  - jekyll-gist
 
 collections:
   posts:
