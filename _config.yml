@@ -32,7 +32,7 @@ timezone: Adelaide/Australia
 
 # Build settings
 markdown: kramdown
-remote_theme: cyanicdev/bones
+remote_theme: javadhamidi/bones
 plugins:
   - jekyll-feed
   - jekyll-gist
