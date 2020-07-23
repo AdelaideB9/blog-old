@@ -6,7 +6,6 @@ author: dotjam
 categories:
 - ctf
 - writeups
-header_img: https://blog.cyanic.me/assets/img/NeverLAN%202020.jpg
 
 ---
 ## Browser Bias
