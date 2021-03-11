@@ -2,7 +2,7 @@
 layout: post
 title: NeverLAN CTF 2020 Write-up
 date: 2020-02-08T14:30:10.000+00:00
-author: dotjam
+author: javad
 categories:
 - ctf
 - writeups
@@ -40,4 +40,4 @@ Given the 'programming' category, the title, and the fact that we are only linke
 
 Here, each green square is decoded as a zero, and each gray is a one.  Since this is an svg, which is conveniently a file type where infomation is stored in plain text, we didn't need to bring out any python image-processing libraries. Then we would convert the binary string to plain text.
 
-The problem was, we weren't getting the flag - we were getting something like this `time hash:076a1b24abb4870fc5eb892de796b5b32642f95664c04ff0d9b2b96c58a0b`. The trick to this challenge was that the server only spits out the image of the encoded flag at hourly intervals, during the minute after the clock has shifted to the new hour. Once we got [the right image](https://drive.google.com/file/d/10QvCxkLxjBWdqNUfwSciPpDAyMXqjkZo/view?usp=sharing) we also got `Now you've got it! Here's your flag: flag{its_all_ab0ut_timing}`.
+The problem was, we weren't getting the flag - we were getting something like this `time hash:076a1b24abb4870fc5eb892de796b5b32642f95664c04ff0d9b2b96c58a0b`. The trick to this challenge was that the server only spits out the image of the encoded flag at hourly intervals, during the minute after the clock has shifted to the new hour. Once we got [the right image](/assets/img/php.svg) we also got `Now you've got it! Here's your flag: flag{its_all_ab0ut_timing}`.

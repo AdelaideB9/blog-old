@@ -1,0 +1,1 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b42f98a1-f211-4b08-8033-fd52c7e7e8a6/deploy-status)](https://app.netlify.com/sites/elated-volhard-5def7e/deploys)
