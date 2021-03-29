@@ -42,3 +42,5 @@ fields:
   config:
     required: false
   label: Header Image URL
+pages:
+- _posts/chicken-umassctf-21.md
