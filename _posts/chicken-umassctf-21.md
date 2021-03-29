@@ -2,10 +2,8 @@
 layout: post
 date: 2021-03-29 5:06 AM +0000
 categories:
-- forensics
-- pdf
-- 7z
-- johntheripper
+- ctf
+- write-ups
 title: Chicken - UMassCTF '21
 authors:
 - samiko
