@@ -42,6 +42,15 @@ fields:
   config:
     required: false
   label: Header Image URL
+- name: description
+  type: textarea
+  default: ''
+  config:
+    required: false
+    wysiwyg: false
+    schema:
+      format: markdown
+  label: Description
 pages:
 - _posts/2020-01-24-welcome-to-jekyll.markdown
 - _posts/2021-03-07-utctf.md
