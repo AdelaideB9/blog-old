@@ -42,5 +42,3 @@ fields:
   config:
     required: false
   label: Header Image URL
-pages:
-- _posts/2020-01-24-welcome-to-jekyll.markdown
