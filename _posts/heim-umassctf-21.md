@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Heim - UMassCTF '21
-date: 2021-03-29T05:06:00.000+00:00
+date: 2021-03-29T01:30:00
 authors:
 - samiko
 categories:
@@ -10,167 +10,177 @@ categories:
 header_img: ''
 
 ---
-_Chicken Chicken Chicken: Chicken Chicken? A forensics category challenge all about extracting hidden streams in a PDF file and 7-Zip password cracking._
+_Only those who BEARER a token may enter! A web exploitation category challenge on intercepting and forging JSON Web Token from a debugging endpoint to bypass authentication._
 
-## Investigating the mystery PDF File
+## The Heim
 
-We're given a modified PDF file of the infamous research paper, "Chicken Chicken Chicken: Chicken Chicken", by Doug Zongker at the University of Washington.
+Upon navigating to the given URL, we're met with a login form which asks the user for a "name", claiming that "only those who BEARER a token may enter".
 
-[chicken.pdf](http://static.ctf.umasscybersec.org/forensics/4a1df658-9bd2-4582-892d-630c9fe36084/chicken.pdf)
+![https://i.imgur.com/96m81yH.png](https://i.imgur.com/96m81yH.png)
 
-![https://i.imgur.com/jBSJVNH.png](https://i.imgur.com/jBSJVNH.png)
+After entering a name and hitting "Enter", we are then redirected to the `/auth/authorised` page containing our access token:
 
-Since we know this is a published research paper, we can download a copy of the [original PDF file](https://isotropic.org/papers/chicken.pdf) and compare the two for any difference:
+![https://i.imgur.com/s2PtrcI.png](https://i.imgur.com/s2PtrcI.png)
 
-![https://i.imgur.com/bE2dmRu.png](https://i.imgur.com/bE2dmRu.png)
+This likely suggests that we're dealing with some type of bearer token authentication. Bearer tokens allow requests to authenticate by using a cryptic string generated and encrypted by the server, such as a JSON Web Token, which looks something akin to this:
 
-We see that at around line 202, there is an extra OpenAction object inserted into the document, with a data stream beginning with `7z`:
+![https://i.imgur.com/IVE3srk.png](https://i.imgur.com/IVE3srk.png)
 
-`$ hexdump -C chicken.pdf | grep 7z -A 11`
+This token is then included in the HTTP header, in the format of:
 
-    ```
-    00001980  0d 0a 37 7a bc af 27 1c  00 04 2b 65 00 6c 30 00  |..7z..'...+e.l0.|
-    00001990  00 00 00 00 00 00 6a 00  00 00 00 00 00 00 4c 6a  |......j.......Lj|
-    000019a0  b9 1e 0c fd be 4f 3b 93  39 58 52 bd 23 ea 0b 2d  |.....O;.9XR.#..-|
-    000019b0  8d d1 a2 79 55 0b d8 05  68 43 0d ae 06 d5 2d f8  |...yU...hC....-.|
-    000019c0  25 ff b4 16 8d 21 3b 88  16 35 44 69 6d 5c 0e 59  |%....!;..5Dim\.Y|
-    000019d0  a7 b3 01 04 06 00 01 09  30 00 07 0b 01 00 02 24  |........0......$|
-    000019e0  06 f1 07 01 0a 53 07 56  f2 43 9d 21 42 28 ae 21  |.....S.V.C.!B(.!|
-    000019f0  21 01 00 01 00 0c 29 25  00 08 0a 01 4e 5d 1c 8e  |!.....)%....N]..|
-    00001a00  00 00 05 01 19 09 00 00  00 00 00 00 00 00 00 11  |................|
-    00001a10  0f 00 73 00 65 00 63 00  72 00 65 00 74 00 00 00  |..s.e.c.r.e.t...|
-    00001a20  19 04 00 00 00 00 14 0a  01 00 80 33 4a 2c b7 1d  |...........3J,..|
-    00001a30  d7 01 15 06 01 00 20 80  a4 81 00 00 0a 65 6e 64  |...... ......end|
-    ```
+```html
+Authorization: Bearer <JWT>
+```
 
-The data stream starts with the 7z magic bytes, confirming that it is indeed a 7z file:
+## Intercepting requests with Burp Suite
 
-[List of file signatures - Wikipedia](https://en.wikipedia.org/wiki/List_of_file_signatures)
+Let's intercept the outbound POST request made to `/auth` with Burp Suite's proxy feature, and forward the request to the repeater with `Ctrl-R` to try and figure out what is happening behind the scenes:
 
-![https://i.imgur.com/99riFle.png](https://i.imgur.com/99riFle.png)
+![https://i.imgur.com/EZ3LsiC.png](https://i.imgur.com/EZ3LsiC.png)
 
-Let's extract the stream with a bit of Bash-fu to a `chicken.hex` file:
+We see that the browser first makes a POST request to `/auth` with the form data, and is then redirected to the URL `/auth?access_token=<JWT>&jwt_secret_key=arottenbranchwillbefoundineverytree`.
 
-`$ hexdump -C chicken.pdf | grep 7z -A 11 | cut -d ' ' -f3- | rev | cut -d ' ' -f3- | rev > chicken.hex`
+Leaked at the end of the redirect URL is the `jwt_secret_key`, which is used for encrypting the JSON Web Tokens:
 
-    ```
-    0d 0a 37 7a bc af 27 1c 00 04 2b 65 00 6c 30 00
-    00 00 00 00 00 00 6a 00 00 00 00 00 00 00 4c 6a
-    b9 1e 0c fd be 4f 3b 93 39 58 52 bd 23 ea 0b 2d
-    8d d1 a2 79 55 0b d8 05 68 43 0d ae 06 d5 2d f8
-    25 ff b4 16 8d 21 3b 88 16 35 44 69 6d 5c 0e 59
-    a7 b3 01 04 06 00 01 09 30 00 07 0b 01 00 02 24
-    06 f1 07 01 0a 53 07 56 f2 43 9d 21 42 28 ae 21
-    21 01 00 01 00 0c 29 25 00 08 0a 01 4e 5d 1c 8e
-    00 00 05 01 19 09 00 00 00 00 00 00 00 00 00 11
-    0f 00 73 00 65 00 63 00 72 00 65 00 74 00 00 00
-    19 04 00 00 00 00 14 0a 01 00 80 33 4a 2c b7 1d
-    d7 01 15 06 01 00 20 80 a4 81 00 00 0a 65 6e 64
-    ```
+`arottenbranchwillbefoundineverytree`
 
-From reading the [technical specifications](https://www.7-zip.org/recover.html) of the 7z file format, we know the file has to begin with `37 7A BC AF 27 1C` and end with `00 00`. Therefore, we can trim off the starting `0D 0A` and the ending `0A 65 6E 64` bytes, as they are not a part of the file.
+While looking for more API endpoints on the website by trying related keywords, we stumbled upon `/heim`, which returned:
 
-Convert the hex dump to a 7z file:
+```json
+{
+  "msg": "Missing Authorization Header"
+}
+```
 
-`$ xxd -r -p chicken.hex chicken.7z`
+This means that the web server is expecting a Bearer token in the HTTP header, so let's add that to our request in Burp Suite's repeater:
 
-## Extracting and cracking 7z password hash with John the Ripper
+![https://i.imgur.com/HR6kSKQ.png](https://i.imgur.com/HR6kSKQ.png)
 
-Upon trying to extract the 7z file, we're greeted with a password prompt:
+We received a massive message encoded in base64, let's decode it:
 
-`$ 7z x chicken.7z`
+`$ echo "ewogICAgIm...AgIH0KfQ==" | base64 -d`
 
-    7-Zip [64] 17.03 : Copyright (c) 1999-2020 Igor Pavlov : 2017-08-28
-    p7zip Version 17.03 (locale=en_AU.UTF-8,Utf16=on,HugeFiles=on,64 bits,8 CPUs x64)
-    
-    Scanning the drive for archives:
-    1 file, 186 bytes (1 KiB)
-    
-    Extracting archive: chicken.7z
-    --
-    Path = chicken.7z
-    Type = 7z
-    Physical Size = 186
-    Headers Size = 138
-    Method = LZMA2:12 7zAES
-    Solid = -
-    Blocks = 1
-    
-    Enter password (will not be echoed): _
+```json
+{
+  "api": {
+      "v1": {
+          "/auth": {
+              "get": {
+                  "summary": "Debugging method for authorization post",
+                  "security": "None",
+                  "parameters": {
+                      "access_token": {
+                          "required": true,
+                          "description": "Access token from recently authorized Viking",
+                          "in": "path",
+                      },
+                      "jwt_secret_key": {
+                          "required": false,
+                          "description": "Debugging - should be removed in prod Heim",
+                          "in": "path"
+                      }
+                  }
+              },
+              "post": {
+                  "summary": "Authorize yourself as a Viking",
+                  "security": "None",
+                  "parameters": {
+                      "username": {
+                          "required": true,
+                          "description": "Your Viking name",
+                          "in": "body",
+                          "content": "multipart/x-www-form-urlencoded"
+                      }
+                  }
+              }
+          },
+          "/heim": {
+              "get": {
+                  "summary": "List the endpoints available to named Vikings",
+                  "security": "BearerAuth"
+              }
+          },
+          "/flag": {
+              "get": {
+                  "summary": "Retrieve the flag",
+                  "security": "BearerAuth"
+              }
+          }
+      }
+  }
+}
+```
 
-We can obtain the password hash with `7z2john`:
+Nice! We have obtained a list of all available endpoints and now know the flag is located at `/flag`, and that the GET method for `/auth` was originally meant to be a debugging endpoint, explaining why `jwt_secret_key` was leaked in the redirect URL.
 
-`$ 7z2john ./chicken.7z > chicken.hash`
+Making a GET request to `/flag` with our Bearer token returns:
 
-    chicken.7z:$7z$2$19$0$$8$56f2439d214228ae0000000000000000$2384223566$48$41$0cfdbe4f3b93395852bd23ea0b2d8dd1a279550bd80568430dae06d52df825ffb4168d213b88163544696d5c0e59a7b3$37$00
+```json
+{
+  "msg": "You are not worthy. Only the AllFather Odin may view the flag"
+}
+```
 
-Now that we have the password hash, let's crack it using John with the rockyou.txt wordlist:
+Seems like only Odin is worthy enough to view the flag! Also, trying to submit "odin" as the name in the login form returns:
 
-`$ john chicken.hash --wordlist=rockyou.txt --format=7z-opencl`
+```json
+{
+  "error": "You are not wise enough to be Odin"
+}
+```
 
-    Device 2@arch-zippy: GeForce GTX 1070
-    Using default input encoding: UTF-8
-    Loaded 1 password hash (7z-opencl, 7-Zip [SHA256 AES OpenCL])
-    Cost 1 (iteration count) is 524288 for all loaded hashes
-    Cost 2 (padding size) is 7 for all loaded hashes
-    Cost 3 (compression type) is 2 for all loaded hashes
-    Will run 8 OpenMP threads
-    Press 'q' or Ctrl-C to abort, almost any other key for status
-    0g 0:00:00:15 0.36% (ETA: 00:59:49) 0g/s 3576p/s 3576c/s 3576C/s Dev#2:61°C iiloveyou..simone13
-    0g 0:00:11:47 16.93% (ETA: 00:59:03) 0g/s 3736p/s 3736c/s 3736C/s Dev#2:59°C yahoomylove..y2j341
-    0g 0:00:19:51 29.15% (ETA: 00:57:34) 0g/s 3643p/s 3643c/s 3643C/s Dev#2:60°C rebel9250..rdoleo
-    pineapple95 (chicken.7z)
-    1g 0:00:21:25 DONE (2021-03-29 00:10) 0.000778g/s 3627p/s 3627c/s 3627C/s Dev#2:59°C pinkice88..pincy
-    Use the "--show" option to display all of the cracked passwords reliably
-    Session completed
+Though, since we can obtain a sample access token and are in possession of the secret key, we can forge our own tokens to authenticate as the Odin user.
 
-After 21 gruelling minutes, we get the cracked password:
+## Forging Odin's token
 
-`pineapple95`
+Using [CyberChef](https://gchq.github.io/CyberChef/) tool, we can easily read the payload of our own JWT string with the "JWT decode" function:
 
-Extract the 7z:
+![https://i.imgur.com/gRvcmbl.png](https://i.imgur.com/gRvcmbl.png)
 
-`$ 7z x chicken.7z`
+We see that the JWT payload contains the following data:
 
-    7-Zip [64] 17.03 : Copyright (c) 1999-2020 Igor Pavlov : 2017-08-28
-    p7zip Version 17.03 (locale=en_AU.UTF-8,Utf16=on,HugeFiles=on,64 bits,8 CPUs x64)
-    
-    Scanning the drive for archives:
-    1 file, 186 bytes (1 KiB)
-    
-    Extracting archive: chicken.7z
-    --
-    Path = chicken.7z
-    Type = 7z
-    Physical Size = 186
-    Headers Size = 138
-    Method = LZMA2:12 7zAES
-    Solid = -
-    Blocks = 1
-    
-    Enter password (will not be echoed): pineapple95
-    Everything is Ok
-    
-    Size:       37
-    Compressed: 186
+```json
+{
+    "fresh": false,
+    "iat": 1617017482,
+    "jti": "380b9f5c-fb31-479e-a189-59e2c8040453",
+    "nbf": 1617017482,
+    "type": "access",
+    "sub": "samiko",
+    "exp": 1617018382
+}
+```
 
-The 7z file contains a `secret` file, let's read it:
+Of all variables, `sub` (subject) and `exp` (expiration time) are the ones that appear most interesting to us, since we want to forge a token for Odin (that never expires!), so let's modify the payload to the following:
 
-`$ cat secret`
+```json
+{
+    "fresh": false,
+    "iat": 1617017482,
+    "jti": "380b9f5c-fb31-479e-a189-59e2c8040453",
+    "nbf": 1617017482,
+    "type": "access",
+    "sub": "odin",
+    "exp": 9999999999
+}
+```
 
-    VU1BU1N7QF9sIUxfNW03SCFuXzN4N3JAfQo=
+Using the "JWT Sign" function with the leaked `jwt_secret_key` and HS256 as parameters, we get the token:
 
-This string seems to be encoded in base64, as hinted by the `=` padding. Decoding it gives:
+![https://i.imgur.com/AEjoHH4.png](https://i.imgur.com/AEjoHH4.png)
 
-`$ echo "VU1BU1N7QF9sIUxfNW03SCFuXzN4N3JAfQo=" | base64 -d`
+Using the forged token in the HTTP header as a Bearer token, we make a GET request to `/flag`:
 
-    UMASS{@_l!L_5m7H!n_3x7r@}
+![https://i.imgur.com/Tq2jaX7.png](https://i.imgur.com/Tq2jaX7.png)
 
-Winner winner chicken dinner, we got the flag!
+Voila! We got the flag:
+
+```json
+UMASS{liveheim_laughheim_loveheim}
+```
 
 ## Resources
 
-1. [https://isotropic.org/papers/chicken.pdf](https://isotropic.org/papers/chicken.pdf)
-2. [http://myexperimentswithmalware.blogspot.com/2014/09/pdf-analysis-with-peepdf.html](http://myexperimentswithmalware.blogspot.com/2014/09/pdf-analysis-with-peepdf.html)
-3. [https://en.wikipedia.org/wiki/List_of_file_signatures](https://en.wikipedia.org/wiki/List_of_file_signatures)
-4. [https://www.7-zip.org/recover.html](https://www.7-zip.org/recover.html)
+1. [https://swagger.io/docs/specification/authentication/bearer-authentication/](https://swagger.io/docs/specification/authentication/bearer-authentication/)
+2. [https://research.securitum.com/jwt-json-web-token-security/](https://research.securitum.com/jwt-json-web-token-security/)
+3. [https://gchq.github.io/CyberChef/](https://gchq.github.io/CyberChef/)
