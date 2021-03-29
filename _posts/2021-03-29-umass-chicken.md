@@ -16,7 +16,7 @@ _Chicken Chicken Chicken: Chicken Chicken? A forensics category challenge all ab
 
 We're given a modified PDF file of the infamous research paper, "Chicken Chicken Chicken: Chicken Chicken", by Doug Zongker at the University of Washington.
 
-[chicken.pdf](http://static.ctf.umasscybersec.org/forensics/4a1df658-9bd2-4582-892d-630c9fe36084/chicken.pdf)
+[chicken.pdf](https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F1265e1d3-f480-4881-a1f6-b188cdc8701e%2Fchicken.pdf?table=block&id=217d1ee6-a5ff-47aa-9518-b9cd4305949d)
 
 ![https://i.imgur.com/jBSJVNH.png](https://i.imgur.com/jBSJVNH.png)
 
