@@ -1,12 +1,12 @@
 ---
 layout: post
-date: 2021-03-29 5:06 AM +0000
+title: Chicken - UMassCTF '21
+date: 2021-03-29T05:06:00.000+00:00
+authors:
+- samiko
 categories:
 - ctf
 - write-ups
-title: Chicken - UMassCTF '21
-authors:
-- samiko
 header_img: ''
 
 ---
