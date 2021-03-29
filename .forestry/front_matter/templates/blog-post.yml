@@ -43,4 +43,5 @@ fields:
     required: false
   label: Header Image URL
 pages:
-- _posts/chicken-umassctf-21.md
+- _posts/2020-01-24-welcome-to-jekyll.markdown
+- _posts/test.md
