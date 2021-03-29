@@ -38,9 +38,11 @@ Let's intercept the outbound POST request made to `/auth` with Burp Suite's prox
 
 ![https://i.imgur.com/EZ3LsiC.png](https://i.imgur.com/EZ3LsiC.png)
 
-We see that the browser first makes a POST request to `/auth` with the form data, and is then redirected to the URL `/auth?access_token=<JWT>&jwt_secret_key=arottenbranchwillbefoundineverytree`.
+We see that the browser first makes a POST request to `/auth` with the form data, and is then redirected to the URL:
 
-Leaked at the end of the redirect URL is the `jwt_secret_key`, which is used for encrypting the JSON Web Tokens:
+`/auth?access_token=<JWT>&jwt_secret_key=arottenbranchwillbefoundineverytree`
+
+Leaked at the end of the redirect URL is the `jwt_secret_key`, which is used for encrypting JSON Web Tokens:
 
 `arottenbranchwillbefoundineverytree`
 
