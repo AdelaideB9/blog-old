@@ -8,10 +8,9 @@ categories:
 - ctf
 - write-ups
 header_img: ''
+description: 'Only those who BEARER a token may enter! A web exploitation category challenge on intercepting and forging JSON Web Token from a debugging endpoint to bypass authentication.'
 
 ---
-_Only those who BEARER a token may enter! A web exploitation category challenge on intercepting and forging JSON Web Token from a debugging endpoint to bypass authentication._
-
 ## The Heim
 
 Upon navigating to the given URL, we're met with a login form which asks the user for a "name", claiming that "only those who BEARER a token may enter".

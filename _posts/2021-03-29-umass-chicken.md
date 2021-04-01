@@ -8,10 +8,9 @@ categories:
 - ctf
 - write-ups
 header_img: ''
+description: 'Chicken Chicken Chicken: Chicken Chicken? A forensics category challenge all about extracting hidden streams in a PDF file and 7-Zip password cracking.'
 
 ---
-_Chicken Chicken Chicken: Chicken Chicken? A forensics category challenge all about extracting hidden streams in a PDF file and 7-Zip password cracking._
-
 ## Investigating the mystery PDF File
 
 We're given a modified PDF file of the infamous research paper, "Chicken Chicken Chicken: Chicken Chicken", by Doug Zongker at the University of Washington.
@@ -28,20 +27,20 @@ We see that at around line 202, there is an extra OpenAction object inserted int
 
 `$ hexdump -C chicken.pdf | grep 7z -A 11`
 
-    ```
-    00001980  0d 0a 37 7a bc af 27 1c  00 04 2b 65 00 6c 30 00  |..7z..'...+e.l0.|
-    00001990  00 00 00 00 00 00 6a 00  00 00 00 00 00 00 4c 6a  |......j.......Lj|
-    000019a0  b9 1e 0c fd be 4f 3b 93  39 58 52 bd 23 ea 0b 2d  |.....O;.9XR.#..-|
-    000019b0  8d d1 a2 79 55 0b d8 05  68 43 0d ae 06 d5 2d f8  |...yU...hC....-.|
-    000019c0  25 ff b4 16 8d 21 3b 88  16 35 44 69 6d 5c 0e 59  |%....!;..5Dim\.Y|
-    000019d0  a7 b3 01 04 06 00 01 09  30 00 07 0b 01 00 02 24  |........0......$|
-    000019e0  06 f1 07 01 0a 53 07 56  f2 43 9d 21 42 28 ae 21  |.....S.V.C.!B(.!|
-    000019f0  21 01 00 01 00 0c 29 25  00 08 0a 01 4e 5d 1c 8e  |!.....)%....N]..|
-    00001a00  00 00 05 01 19 09 00 00  00 00 00 00 00 00 00 11  |................|
-    00001a10  0f 00 73 00 65 00 63 00  72 00 65 00 74 00 00 00  |..s.e.c.r.e.t...|
-    00001a20  19 04 00 00 00 00 14 0a  01 00 80 33 4a 2c b7 1d  |...........3J,..|
-    00001a30  d7 01 15 06 01 00 20 80  a4 81 00 00 0a 65 6e 64  |...... ......end|
-    ```
+```
+00001980  0d 0a 37 7a bc af 27 1c  00 04 2b 65 00 6c 30 00  |..7z..'...+e.l0.|
+00001990  00 00 00 00 00 00 6a 00  00 00 00 00 00 00 4c 6a  |......j.......Lj|
+000019a0  b9 1e 0c fd be 4f 3b 93  39 58 52 bd 23 ea 0b 2d  |.....O;.9XR.#..-|
+000019b0  8d d1 a2 79 55 0b d8 05  68 43 0d ae 06 d5 2d f8  |...yU...hC....-.|
+000019c0  25 ff b4 16 8d 21 3b 88  16 35 44 69 6d 5c 0e 59  |%....!;..5Dim\.Y|
+000019d0  a7 b3 01 04 06 00 01 09  30 00 07 0b 01 00 02 24  |........0......$|
+000019e0  06 f1 07 01 0a 53 07 56  f2 43 9d 21 42 28 ae 21  |.....S.V.C.!B(.!|
+000019f0  21 01 00 01 00 0c 29 25  00 08 0a 01 4e 5d 1c 8e  |!.....)%....N]..|
+00001a00  00 00 05 01 19 09 00 00  00 00 00 00 00 00 00 11  |................|
+00001a10  0f 00 73 00 65 00 63 00  72 00 65 00 74 00 00 00  |..s.e.c.r.e.t...|
+00001a20  19 04 00 00 00 00 14 0a  01 00 80 33 4a 2c b7 1d  |...........3J,..|
+00001a30  d7 01 15 06 01 00 20 80  a4 81 00 00 0a 65 6e 64  |...... ......end|
+```
 
 The data stream starts with the 7z magic bytes, confirming that it is indeed a 7z file:
 
@@ -53,20 +52,20 @@ Let's extract the stream with a bit of Bash-fu to a `chicken.hex` file:
 
 `$ hexdump -C chicken.pdf | grep 7z -A 11 | cut -d ' ' -f3- | rev | cut -d ' ' -f3- | rev > chicken.hex`
 
-    ```
-    0d 0a 37 7a bc af 27 1c 00 04 2b 65 00 6c 30 00
-    00 00 00 00 00 00 6a 00 00 00 00 00 00 00 4c 6a
-    b9 1e 0c fd be 4f 3b 93 39 58 52 bd 23 ea 0b 2d
-    8d d1 a2 79 55 0b d8 05 68 43 0d ae 06 d5 2d f8
-    25 ff b4 16 8d 21 3b 88 16 35 44 69 6d 5c 0e 59
-    a7 b3 01 04 06 00 01 09 30 00 07 0b 01 00 02 24
-    06 f1 07 01 0a 53 07 56 f2 43 9d 21 42 28 ae 21
-    21 01 00 01 00 0c 29 25 00 08 0a 01 4e 5d 1c 8e
-    00 00 05 01 19 09 00 00 00 00 00 00 00 00 00 11
-    0f 00 73 00 65 00 63 00 72 00 65 00 74 00 00 00
-    19 04 00 00 00 00 14 0a 01 00 80 33 4a 2c b7 1d
-    d7 01 15 06 01 00 20 80 a4 81 00 00 0a 65 6e 64
-    ```
+```
+0d 0a 37 7a bc af 27 1c 00 04 2b 65 00 6c 30 00
+00 00 00 00 00 00 6a 00 00 00 00 00 00 00 4c 6a
+b9 1e 0c fd be 4f 3b 93 39 58 52 bd 23 ea 0b 2d
+8d d1 a2 79 55 0b d8 05 68 43 0d ae 06 d5 2d f8
+25 ff b4 16 8d 21 3b 88 16 35 44 69 6d 5c 0e 59
+a7 b3 01 04 06 00 01 09 30 00 07 0b 01 00 02 24
+06 f1 07 01 0a 53 07 56 f2 43 9d 21 42 28 ae 21
+21 01 00 01 00 0c 29 25 00 08 0a 01 4e 5d 1c 8e
+00 00 05 01 19 09 00 00 00 00 00 00 00 00 00 11
+0f 00 73 00 65 00 63 00 72 00 65 00 74 00 00 00
+19 04 00 00 00 00 14 0a 01 00 80 33 4a 2c b7 1d
+d7 01 15 06 01 00 20 80 a4 81 00 00 0a 65 6e 64
+```
 
 From reading the [technical specifications](https://www.7-zip.org/recover.html) of the 7z file format, we know the file has to begin with `37 7A BC AF 27 1C` and end with `00 00`. Therefore, we can trim off the starting `0D 0A` and the ending `0A 65 6E 64` bytes, as they are not a part of the file.
 
