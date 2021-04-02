@@ -2,13 +2,14 @@
 backend:
   name: git-gateway
   branch: master
-  media_folder: 'assets/uploads'
-  site_url: https://blog.adelaideb9.com
-  display_url: https://blog.adelaideb9.com
-  publish_mode: editorial_workflow
 
-  collections:
-    - name: 'blog'
+media_folder: 'assets/uploads'
+site_url: https://blog.adelaideb9.com
+display_url: https://blog.adelaideb9.com
+publish_mode: editorial_workflow
+
+collections:
+  - name: 'blog'
     label: 'Blog Post'
     folder: '_posts/'
     preview_path: /{{slug}}
@@ -16,33 +17,32 @@ backend:
     slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
     editor:
       preview: false
-      fields:
-        - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'post' }
-        - { label: 'Title', name: 'title', widget: 'string' }
-        - { label: 'Publish Date', name: 'date', widget: 'datetime' }
-        - { label: 'Description', name: 'description', widget: 'string' }
+    fields:
+      - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'post' }
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - { label: 'Publish Date', name: 'date', widget: 'datetime' }
+      - { label: 'Description', name: 'description', widget: 'string' }
       # - { label: 'Header Image', name: 'header_img', widget: 'image' }
-      - {
-        label: 'Author',
-        name: 'author',
-        widget: 'relation',
-        collection: 'authors',
-        display_fields: [display_name],
-        search_fields: [display_name],
-        value_field: 'name',
-      }
+        - {
+      label: 'Author',
+      name: 'author',
+      widget: 'relation',
+      collection: 'authors',
+      display_fields: [display_name],
+      search_fields: [display_name],
+      value_field: 'name',
+    }
       # add categories (rename tags?)
       - { label: 'Body', name: 'body', widget: 'markdown' }
-
-    - name: 'authors'
+  - name: 'authors'
     label: 'Author'
     folder: '_authors/'
     create: true
     editor:
       preview: false
-      fields:
-        - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'author' }
-        - { label: 'Short Name', name: 'name', widget: 'string' }
-        - { label: 'Display Name', name: 'display_name', widget: 'string' }
-        - { label: 'Position', name: 'position', widget: 'string' }
-        - { label: 'Body', name: 'body', widget: 'markdown' }
+    fields:
+      - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'author' }
+      - { label: 'Short Name', name: 'name', widget: 'string' }
+      - { label: 'Display Name', name: 'display_name', widget: 'string' }
+      - { label: 'Position', name: 'position', widget: 'string' }
+      - { label: 'Body', name: 'body', widget: 'markdown' }
