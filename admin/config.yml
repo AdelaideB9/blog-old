@@ -23,16 +23,16 @@ collections:
       - { label: 'Publish Date', name: 'date', widget: 'datetime' }
       - { label: 'Description', name: 'description', widget: 'string' }
       # - { label: 'Header Image', name: 'header_img', widget: 'image' }
-        - {
-      label: 'Author',
-      name: 'author',
-      widget: 'relation',
-      collection: 'authors',
-      display_fields: [display_name],
-      search_fields: [display_name],
-      value_field: 'name',
-    }
-      # add categories (rename tags?)
+      - {
+        label: 'Author',
+        name: 'author',
+        widget: 'relation',
+        collection: 'authors',
+        display_fields: [display_name],
+        search_fields: [display_name],
+        value_field: 'name',
+        }
+      - { label: "Tags", name: "categories", widget: "list", collapsed: true, default: ["ctf", "write-ups"] }
       - { label: 'Body', name: 'body', widget: 'markdown' }
   - name: 'authors'
     label: 'Author'
