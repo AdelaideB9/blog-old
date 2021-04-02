@@ -2,22 +2,47 @@
 backend:
   name: git-gateway
   branch: master
-media_folder: 'assets/uploads'
-collections:
-  - name: 'blog'
-    label: 'Blog Posts'
+  media_folder: 'assets/uploads'
+  site_url: https://blog.adelaideb9.com
+  display_url: https://blog.adelaideb9.com
+  publish_mode: editorial_workflow
+
+  collections:
+    - name: 'blog'
+    label: 'Blog Post'
     folder: '_posts/'
+    preview_path: /{{slug}}
     create: true
     slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
     editor:
       preview: false
-    fields:
-      - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'post' }
-      - { label: 'Title', name: 'title', widget: 'string' }
-      - { label: 'Publish Date', name: 'date', widget: 'datetime' }
-      - { label: 'Description', name: 'description', widget: 'string' }
-      - { label: 'Header Image', name: 'header_img', widget: 'image' }
+      fields:
+        - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'post' }
+        - { label: 'Title', name: 'title', widget: 'string' }
+        - { label: 'Publish Date', name: 'date', widget: 'datetime' }
+        - { label: 'Description', name: 'description', widget: 'string' }
+      # - { label: 'Header Image', name: 'header_img', widget: 'image' }
+      - {
+        label: 'Author',
+        name: 'author',
+        widget: 'relation',
+        collection: 'authors',
+        display_fields: [display_name],
+        search_fields: [display_name],
+        value_field: 'name',
+      }
+      # add categories (rename tags?)
       - { label: 'Body', name: 'body', widget: 'markdown' }
-site_url: https://blog.adelaideb9.com/
-display_url: https://blog.adelaideb9.com/
-logo_url: https://avatars.githubusercontent.com/u/78961424?s=200&v=4
+
+    - name: 'authors'
+    label: 'Author'
+    folder: '_authors/'
+    create: true
+    editor:
+      preview: false
+      fields:
+        - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'author' }
+        - { label: 'Short Name', name: 'name', widget: 'string' }
+        - { label: 'Display Name', name: 'display_name', widget: 'string' }
+        - { label: 'Position', name: 'position', widget: 'string' }
+        - { label: 'Body', name: 'body', widget: 'markdown' }
