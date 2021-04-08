@@ -66,7 +66,7 @@ g(0) &\equiv x_*0 \times 0^{n-1}+x\_2 \times 0^{n-2}+...+x\_{n-2} \times 0+x_*{n
 g(1) &\equiv x_*0 \times 1^{n-1}+x\_2 \times 1^{n-2}+...+x\_{n-2} \times 1+x_*{n-1} \Mod{691} \\
 g(2) &\equiv x_*0 \times 2^{n-1}+x\_2 \times 2^{n-2}+...+x\_{n-2} \times 2+x_*{n-1} \Mod{691} \
 
-&\vdots \\
+& \vdots \\
 g(n) &\equiv x_0 \times (n-1)^{n-1}+x\_n \times (n-1)^{n-2}+...+x\_{1} \times (n-1)+x_{n-1} \Mod{691}\
 \end{align*}$$
 
@@ -97,7 +97,7 @@ g(1) \\
 g(n-2)\\
 
 g(n-1)\
-\end{matrix}$$
+\end{bmatrix}$$
 
 \
 and $$X$$ is the matrix of characters (essentially the flag).
@@ -129,8 +129,7 @@ b = vector(GF(691), 100, nums)
 solution = M.solve_right(b)
 
 % Converting the solution into a string
-solution = list(map(chr, solution))
-flag = ''.join(solution)
+flag = ''.join(chr(c) for c in solution)
 
 print(flag)
 ```
