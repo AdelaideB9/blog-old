@@ -1,7 +1,6 @@
 
 backend:
-  name: test-repo
-  # name: git-gateway
+  name: git-gateway
   branch: master
 
 media_folder: 'assets/uploads'
