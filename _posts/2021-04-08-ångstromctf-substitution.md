@@ -8,7 +8,7 @@ categories:
   - ctf
   - write-ups
 ---
-For this challenge we are given a source file and a netcat server which presumably runs the source. Looking through the source, we see that a integer is taken in as input and using this input, the flag is encrypted. The source is as follows:
+For this challenge we are given a source file and a netcat server which presumably runs the source. Looking through the source code, we see that a integer is taken in as input and using this input, the flag is encrypted. The source is as follows:
 
 ```python
 #!/usr/bin/python
@@ -17,12 +17,10 @@ from functools import reduce
 
 with open("flag", "r") as f:
     key = [ord(x) for x in f.read().strip()]
-
-
+    
 
 def substitute(value):
     return (reduce(lambda x, y: x*value+y, key)) % 691
-
 
 
 print("Enter a number and it will be returned with our super secret synthetic substitution technique")
@@ -56,7 +54,7 @@ $$f(x,y) = kx+y$$
 
 where $$k$$ is the user input, $$x$$ is the previous result and $$y$$ is the next character in the flag. As $$f$$ is a linear function, we can produce the following linear equation.\
 \
-   $$g(k) \equiv x_0k^{n-1}+x\_2k^{n-2}+...+x\_{1}k+x_n \Mod{691}.$$\
+   $$g(k) \equiv x_0k^{n-1}+x\_2k^{n-2}+...+x\_{1}k+x_n \Mod{691}$$\
 \
 where $$x_n$$ is the $$n$$th character of the flag. To test our understanding, let us evaluate $$g(0)$$. As per $$g(k)$$, we should have $$g(0)=x_n$$. In other words, we should get the last letter of the flag, hence we should get the ASCII value of *}*. Connecting to the server and trying it, we indeed get $$125$$.\
 \
@@ -68,7 +66,7 @@ g(0) &\equiv x_0 \times 0^{n-1}+x\_2 \times 0^{n-2}+...+x\_{1} \times 0+x_n \Mod
 g(1) &\equiv x_0 \times 1^{n-1}+x\_2 \times 1^{n-2}+...+x\_{1} \times 1+x_n \Mod{691} \\\
 g(2) &\equiv x_0 \times 2^{n-1}+x\_2 \times 2^{n-2}+...+x\_{1} \times 2+x_n \Mod{691} \\
 
-... \\\
+&\vdots \\\
 g(n) &\equiv x_0 \times n^{n-1}+x\_n \times n^{n-2}+...+x\_{1} \times n+x_n \Mod{691}\
 \end{align*}$$
 
@@ -78,7 +76,16 @@ This can be rewritten as:\
    $$Ax=B mod(691)$$\
 \
 where A is the coefficient matrix:\
-$$ A = \left[\begin{array}{ccccc}*0^{n-1) & 0^{n-2} & \cdots & 0^1 & 1* \ \vdots & & \ddots & & \vdots \  n^{n-1} *& n^{n-2} & \cdots & n^{1} & 1* \end{array} \right] $$
+$$ A =
+
+\begin{bmatrix}\
+0^{n-1} & 0^{n-2} & \cdots & 0^{1} & 1 \\\
+1^{n-1} & 1^{n-2} & \cdots & 1^{1} & 1 \\\
+\vdots   &             &            &          &  \vdots  \\\
+(n-2)^{n-1} & (n-2)^{n-2} & \cdots & (n-2)^{1} & 1 \\\
+(n-1)^{n-1} & (n-1)^{n-2} & \cdots & (n-1)^{1} & 1 \\\
+\end{bmatrix}\
+$$
 
 \
 and B is the outputs for each given input:
