@@ -55,13 +55,13 @@ After researching what the reduce function does, we see that we are essentially 
 
 $$f(x,y) = kx+y$$
 
-where \(k\) is the user input, \(x\) is the previous result and \(y\) is the next character in the flag. As \(f\) is a linear function, we can produce the following linear equation.\
+where $$k$$ is the user input, $$x$$ is the previous result and $$y$$ is the next character in the flag. As $$f$$ is a linear function, we can produce the following linear equation.\
 \
    $$g(k) \equiv x_0k^{n-1}+x\_2k^{n-2}+...+x\_{1}k+x_n \Mod{691}.$$\
 \
-where $x_n$ is the $$n$$th character of the flag. To test our understanding, let us evaluate $$g(0)$$. As per $$g(k)$$, we should have $$g(0)=x_n$$. In other words, we should get the last letter of the flag, hence we should get the ASCII value of *}*. Connecting to the server and trying it, we indeed get $$125$$.\
+where $$x_n$$ is the $$n$$th character of the flag. To test our understanding, let us evaluate $$g(0)$$. As per $$g(k)$$, we should have $$g(0)=x_n$$. In other words, we should get the last letter of the flag, hence we should get the ASCII value of *}*. Connecting to the server and trying it, we indeed get $$125$$.\
 \
-Knowing this, we can make a \(n \times n\) linear system where the \(n\)th equation is the equation \(g(n)\). 
+Knowing this, we can make a $$n \times n$$ linear system where the $$n$$th equation is the equation $$g(n)$$. 
 
 $$\begin{align*}
 
