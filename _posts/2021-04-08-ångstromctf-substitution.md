@@ -74,7 +74,7 @@ g(n) &\equiv x_0 \times (n-1)^{n-1}+x\_n \times (n-1)^{n-2}+...+x\_{1} \times (n
 \
 This can be expressed as:\
 \
-   $$A\textbf{X}=\textbf{B} \pmod(691)$$\
+   $$A\textbf{X}=\textbf{B} \pmod{691}$$\
 \
 where A is the coefficient matrix:\
 $$ \begin{bmatrix}\
