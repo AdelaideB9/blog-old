@@ -11,3 +11,5 @@ categories:
 Just a quick test
 
 $2+2$
+
+$$2+2$$
