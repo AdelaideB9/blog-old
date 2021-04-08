@@ -8,11 +8,9 @@ categories:
   - ctf
   - write-ups
 ---
-For this challenge we are given a source file and a netcat server which presumally runs the source. Downloading the source and running it with python whilst a text file called flag.txt is present in the directory allows us to get numbers encrypted with the flag in some way.\
-\
-Opening the source file we see the follow script.   
+For this challenge we are given a source file and a netcat server which presumably runs the source. Looking through the source, we see that a integer is taken in as input and using this input, the flag is encrypted. The source is as follows:
 
-```
+```python
 #!/usr/bin/python
 
 from functools import reduce
@@ -43,9 +41,9 @@ while True:
 
 \
 \
-We can see that this program uses the flag to encypt the numbers we input and prints the result. The main function of interest to us is the substitute function.
+The main function of interest to us is the substitute function.
 
-```
+```python
 def substitute(value):
     return (reduce(lambda x, y: x*value+y, key)) % 691
 
@@ -53,20 +51,28 @@ def substitute(value):
 
 \
 \
-After researching what the reduce function does, we see that we're essentially taking the first character in the flag, multiplying it by out input and adding it to the follow charcater. This process is repreated with the first character of the flag now being the previous result. This result is then m\
-odded with 691. In essence, we have the following function:\
+After researching what the reduce function does, we see that we are essentially recursively calling 
+
+$$f(x,y) = kx+y$$
+
+where $$k$$ is the user input, $$x$$ is the previous result and $$y$$ is the next character in the flag. As $f$ is a linear function, we can produce the following linear equation.\
 \
-   $$f(f(f(...)), y) = n mod(691)$$\
+   $$g(k) \equiv x_0k^{1}+x\_2k^{2}+...+x\_{n-1}k+x_n \Mod{691}.$$\
 \
-Since $f$ is a linear function (namely $f(x,y) = x*k+y$), we are essentially creating the linear equation:\
+where $x_n$ is the $$n$$th character of the flag. To test our understanding, let us evaluate $$g(0)$$. As per $$g(k)$$, we should have $$g(0)=x_n$$. In other words, we should get the last letter of the flag, hence we should get the ASCII value of *}*. Connecting to the server and trying it, we indeed get $$125$$.\
 \
-   $$g(k) = x_0\*k^{1}+x\_2\*k^{2}+...+x\_{n-1}*k+x_n = s_k mod(691)$$\
-\
-where $k$ is the key and $x_n$ is the nth character of the flag. To test this understanding,let us evaluate $g(0)$. If our understanding is correct, we should get the ascii value of }, this is $125$. Connecting to the server and trying it, we indeed get the right output.\
-\
-Knowing this, we can make a NxN linear system where the nth row is the equation $g(n)$. This is as follows:\
-\
-   -- Maths --\
+Knowing this, we can make a $$n \times n$$ linear system where the $$n$$th equation is the equation $$g(n)$$. 
+
+\\begin{equations*}
+
+g(0) \equiv x_0 \times 0^{n-1}+x\_2 \times 0^{n-2}+...+x\_{1} \times 0+x_n \Mod{691} \\\\\
+g(1) \equiv x_0 \times 1^{n-1}+x\_2 \times 1^{n-2}+...+x\_{1} \times 1+x_n \Mod{691} \\\\\
+g(2) \equiv x_0 \times 2^{n-1}+x\_2 \times 2^{n-2}+...+x\_{1} \times 2+x_n \Mod{691} \\\\
+
+... \\\\\
+g(n) \equiv x_0 \times n^{n-1}+x\_n \times n^{n-2}+...+x\_{1} \times n+x_n \Mod{691}\
+\\end{equations*}
+
 \
 This can be rewritten as:\
 \
@@ -76,10 +82,9 @@ where A is:\
 \
 and B is:\
 \
-While we are not sure as to how long the flag will be, it is reasonable to say it will be less that 100 characters (based off previously retrieved flags). Using this equation and the fact that the characters must be integers, we can solve the system over $\mathbb{Z}mod(691)$. This can be done with th\
-e following sage maths script that uses pwntools to connect to the server and collect the results.
+While we are not sure as to how long the flag will be, it is reasonable to say it will be less that 100 characters (based off previously retrieved flags). Using this equation and the fact that the characters must be integers, we can solve the system over $\mathbb{Z}\Mod{691}$. This can be done with the following sage maths script that uses *pwntools* to connect to the server and collect the results.
 
-```
+```sage
 from pwn import *
 import re
 
@@ -109,6 +114,5 @@ flag = ''.join(solution)
 print(flag)
 ```
 
-\
 \
 Sure enough, after a minute or so of running, we get the flag!
