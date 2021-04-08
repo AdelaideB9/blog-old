@@ -1,6 +1,7 @@
 
 backend:
-  name: git-gateway
+  name: test-repo
+  # name: git-gateway
   branch: master
 
 media_folder: 'assets/uploads'
@@ -12,7 +13,8 @@ collections:
   - name: 'blog'
     label: 'Blog Post'
     folder: '_posts/'
-    preview_path: /{{slug}}
+    # preview_path: '/{{slug}}'
+    show_preview_links: false
     create: true
     slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
     editor:
@@ -21,18 +23,27 @@ collections:
       - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'post' }
       - { label: 'Title', name: 'title', widget: 'string' }
       - { label: 'Publish Date', name: 'date', widget: 'datetime' }
-      - { label: 'Description', name: 'description', widget: 'string' }
-      # - { label: 'Header Image', name: 'header_img', widget: 'image' }
-      - {
-        label: 'Author',
-        name: 'author',
-        widget: 'relation',
-        collection: 'authors',
-        display_fields: [display_name],
-        search_fields: [display_name],
-        value_field: 'name',
+      - { label: 'Description', name: 'description', widget: 'string', required: false }
+      - label: "Authors"
+        name: "authors"
+        widget: "list"
+        fields:
+          - {
+            label: 'Author',
+            name: 'authors',
+            widget: 'relation',
+            collection: 'authors',
+            display_fields: [display_name],
+            search_fields: [display_name],
+            value_field: 'name',
+            }
+      - { 
+        label: "Tags", 
+        name: "categories",
+        widget: "list", 
+        default: ["ctf", "write-ups"], 
+        required: false
         }
-      - { label: "Tags", name: "categories", widget: "list", collapsed: true, default: ["ctf", "write-ups"] }
       - { label: 'Body', name: 'body', widget: 'markdown' }
   - name: 'authors'
     label: 'Author'
@@ -44,5 +55,5 @@ collections:
       - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'author' }
       - { label: 'Short Name', name: 'name', widget: 'string' }
       - { label: 'Display Name', name: 'display_name', widget: 'string' }
-      - { label: 'Position', name: 'position', widget: 'string' }
-      - { label: 'Body', name: 'body', widget: 'markdown' }
+      - { label: 'Position', name: 'position', widget: 'string', required: false }
+      - { label: 'Body', name: 'body', widget: 'markdown', required: false }
