@@ -106,7 +106,7 @@ and $$X$$ is the matrix of characters (essentially the flag).
 \
 While we are not sure as to how long the flag will be, it is reasonable to say it will be less that 100 characters (based off previously retrieved flags). Using this equation and the fact that the characters must be integers, we can solve the system over $$\mathbb{Z}\pmod{691}$$. This can be done with the following sage maths script that uses *pwntools* to connect to the server and collect the results.
 
-```python
+```sage
 from pwn import *
 import re
 
@@ -118,18 +118,18 @@ nums = []
 
 for i in range(100):
 
-    % Sending the numbers from 0-99 to the server and listening to the response
+    # Sending the numbers from 0-99 to the server and listening to the response
     nc.sendline(str(i))
     res = str(nc.recvline())
-    % Stripping the number from the response and appending it to numbers
+    # Stripping the number from the response and appending it to numbers
     nums.append(int(re.findall("[0-9]+", res)[0]))
 
-% Using sagemaths to solve the linear system
+# Using sagemaths to solve the linear system
 M = matrix(ZZ, 100, 100, lambda x, y: pow(x, 99-y))
 b = vector(GF(691), 100, nums)
 solution = M.solve_right(b)
 
-% Converting the solution into a string
+# Converting the solution into a string
 flag = ''.join(chr(c) for c in solution)
 
 print(flag)
