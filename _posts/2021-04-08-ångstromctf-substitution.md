@@ -76,16 +76,13 @@ This can be rewritten as:\
    $$Ax=B mod(691)$$\
 \
 where A is the coefficient matrix:\
-$$ A =
-
-\begin{bmatrix}\
+$$ \begin{bmatrix}\
 0^{n-1} & 0^{n-2} & \cdots & 0^{1} & 1 \\\
 1^{n-1} & 1^{n-2} & \cdots & 1^{1} & 1 \\\
 \vdots   &             &            &          &  \vdots  \\\
 (n-2)^{n-1} & (n-2)^{n-2} & \cdots & (n-2)^{1} & 1 \\\
 (n-1)^{n-1} & (n-1)^{n-2} & \cdots & (n-1)^{1} & 1 \\\
-\end{bmatrix}\
-$$
+\end{bmatrix}$$
 
 \
 and B is the outputs for each given input:
