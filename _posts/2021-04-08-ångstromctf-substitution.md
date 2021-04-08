@@ -12,4 +12,4 @@ Just a quick test
 
 $2+2$
 
-$$2+2$$
+$$e^{\pi i} = -1$$
