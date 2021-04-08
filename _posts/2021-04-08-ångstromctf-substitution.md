@@ -62,18 +62,18 @@ Knowing this, we can make a $$n \times n$$ linear system where the $$n$$th equat
 
 $$\begin{align*}
 
-g(0) &\equiv x_*0 \times 0^{n-1}+x\_2 \times 0^{n-2}+...+x\_{n-2} \times 0+x_*{n-1} \Mod{691} \\
-g(1) &\equiv x_*0 \times 1^{n-1}+x\_2 \times 1^{n-2}+...+x\_{n-2} \times 1+x_*{n-1} \Mod{691} \\
-g(2) &\equiv x_*0 \times 2^{n-1}+x\_2 \times 2^{n-2}+...+x\_{n-2} \times 2+x_*{n-1} \Mod{691} \
+g(0) &\equiv x_*0 \times 0^{n-1}+x\_2 \times 0^{n-2}+...+x\_{n-2} \times 0+x_*{n-1} \pmod{691} \\
+g(1) &\equiv x_*0 \times 1^{n-1}+x\_2 \times 1^{n-2}+...+x\_{n-2} \times 1+x_*{n-1} \pmod{691} \\
+g(2) &\equiv x_*0 \times 2^{n-1}+x\_2 \times 2^{n-2}+...+x\_{n-2} \times 2+x_*{n-1} \pmod{691} \
 
 & \vdots \\
-g(n) &\equiv x_0 \times (n-1)^{n-1}+x\_n \times (n-1)^{n-2}+...+x\_{1} \times (n-1)+x_{n-1} \Mod{691}\
+g(n) &\equiv x_0 \times (n-1)^{n-1}+x\_n \times (n-1)^{n-2}+...+x\_{1} \times (n-1)+x_{n-1} \pmod{691}\
 \end{align*}$$
 
 \
-This can be rewritten as:\
+This can be expressed as:\
 \
-   $$Ax=B mod(691)$$\
+   $$A\textbf{X}=\textbf{B} \pmod(691)$$\
 \
 where A is the coefficient matrix:\
 $$ \begin{bmatrix}\
@@ -103,7 +103,7 @@ g(n-1)\
 and $$X$$ is the matrix of characters (essentially the flag).
 
 \
-While we are not sure as to how long the flag will be, it is reasonable to say it will be less that 100 characters (based off previously retrieved flags). Using this equation and the fact that the characters must be integers, we can solve the system over $$\mathbb{Z}\Mod{691}$$. This can be done with the following sage maths script that uses *pwntools* to connect to the server and collect the results.
+While we are not sure as to how long the flag will be, it is reasonable to say it will be less that 100 characters (based off previously retrieved flags). Using this equation and the fact that the characters must be integers, we can solve the system over $$\mathbb{Z}\pmod{691}$$. This can be done with the following sage maths script that uses *pwntools* to connect to the server and collect the results.
 
 ```python
 from pwn import *
