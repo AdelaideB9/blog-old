@@ -83,7 +83,7 @@ $$ A = \left[\begin{array}{ccccc}*0^{n-1) & 0^{n-2} & \cdots & 0^1 & 1* \ \vdots
 \
 and B is the outputs for each given input:
 
-$$ B = \left\[\begin{array}{c} g(0) \\ g(1) \\ \vdots \\ g(n-2) \\ g(n-1) \end{array}\right] $$\
+$$ B = \left\[ \begin{array}{c} g(0) \end{array} \right] $$\
 \
 While we are not sure as to how long the flag will be, it is reasonable to say it will be less that 100 characters (based off previously retrieved flags). Using this equation and the fact that the characters must be integers, we can solve the system over $$\mathbb{Z}\Mod{691}$$. This can be done with the following sage maths script that uses *pwntools* to connect to the server and collect the results.
 
