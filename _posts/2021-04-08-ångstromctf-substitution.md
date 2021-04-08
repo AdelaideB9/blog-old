@@ -46,7 +46,6 @@ The main function of interest to us is the substitute function.
 ```python
 def substitute(value):
     return (reduce(lambda x, y: x*value+y, key)) % 691
-
 ```
 
 \
@@ -79,14 +78,14 @@ This can be rewritten as:\
    $$Ax=B mod(691)$$\
 \
 where A is the coefficient matrix:\
-$$ A = \begin{array}{ccccc}
-
-*0^{n-1) & 0^{n-2} & \cdots & 0^1 & 1* \ \vdots & & \ddots & & \vdots \  n^{n-1} *& n^{n-2} & \cdots & n^{1} & 1* \end{array} \right] $$
+$$ A = \left[\begin{array}{ccccc}*0^{n-1) & 0^{n-2} & \cdots & 0^1 & 1* \ \vdots & & \ddots & & \vdots \  n^{n-1} *& n^{n-2} & \cdots & n^{1} & 1* \end{array} \right] $$
 
 \
-and B is the outputs for each given input:\
+and B is the outputs for each given input:
+
+$$ B = \left\[\begin{array}{c} g(0) \\ g(1) \\ \vdots \\ g(n-2) \\ g(n-1) \end{array}\right]\
 \
-While we are not sure as to how long the flag will be, it is reasonable to say it will be less that 100 characters (based off previously retrieved flags). Using this equation and the fact that the characters must be integers, we can solve the system over \(\mathbb{Z}\Mod{691}\). This can be done with the following sage maths script that uses *pwntools* to connect to the server and collect the results.
+While we are not sure as to how long the flag will be, it is reasonable to say it will be less that 100 characters (based off previously retrieved flags). Using this equation and the fact that the characters must be integers, we can solve the system over $$\mathbb{Z}\Mod{691}$$. This can be done with the following sage maths script that uses *pwntools* to connect to the server and collect the results.
 
 ```sage
 from pwn import *
