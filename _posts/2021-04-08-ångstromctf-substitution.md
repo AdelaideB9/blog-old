@@ -81,13 +81,13 @@ $$ \begin{bmatrix}\
 1^{n-1} & 1^{n-2} & \cdots & 1^{1} & 1 \\
 \vdots   &             &            &          &  \vdots  \\
 (n-2)^{n-1} & (n-2)^{n-2} & \cdots & (n-2)^{1} & 1 \\
-(n-1)^{n-1} & (n-1)^{n-2} & \cdots & (n-1)^{1} & 1 \\
+(n-1)^{n-1} & (n-1)^{n-2} & \cdots & (n-1)^{1} & 1\
 \end{bmatrix}$$
 
 \
 and B is the outputs for each given input:
 
-$$ \begin{bmatrix}\
+$$ \begin{matrix}\
 g(0) \
 
 g(1)\
@@ -97,7 +97,9 @@ g(1)\
 g(n-2)\
 
 g(n-1)\
-\end{bmatrix}$$\
+\end{matrix}$$
+
+\
 and X is the matrix of characters (essentially the flag).
 
 \
