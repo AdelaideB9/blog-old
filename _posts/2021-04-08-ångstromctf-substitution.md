@@ -61,10 +61,8 @@ where $$x\_{n}$$ is the $$n$$th character of the flag. To test our understanding
 Knowing this, we can make a $$n \times n$$ linear system where the $$n$$th equation is the equation $$g(n)$$. \\[\begin{align*}
 
 g(0) &\equiv x_{*0} \times 0^{n-1}+x\_{1} \times 0^{n-2}+...+x\_{n-2} \times 0+x{n-1} \pmod{691} \
-g(1) &\equiv x_{*0} \times 1^{n-1}+x\_{1} \times 1^{n-2}+...+x\_{n-2} \times 1+x*\*{n-1} \pmod{691} \
-g(2) &\equiv x\_{0} \times 2^{n-1}+x\_{1} \times 2^{n-2}+...+x\_{n-2} \times 2+x\_*{n-1} \pmod{691} \
-
-g(n) &\equiv x_{*0} \times (n-1)^{n-1}+x\_{1} \times (n-1)^{n-2}+...+x\_{n-2} \times (n-1)+x*{n-1} \pmod{691}\
+g(1) &\equiv x_{*0} \times 1^{n-1}+x\_{1} \times 1^{n-2}+...+x\_{n-2} \times 1+x_*{n-1} \pmod{691} \
+g(2) &\equiv x\_{0} \times 2^{n-1}+x\_{1} \times 2^{n-2}+...+x\_{n-2} \times 2+x\_*{n-1} \pmod{691} \\
 \end{align*}\\]
 
 \
@@ -85,13 +83,13 @@ where A is the coefficient matrix:\
 and B is the outputs for each given input:
 
 \\[\begin{bmatrix}\
-g(0) \\
+g(0) \
 
-g(1) \\
+g(1) \
 
-\vdots \\
+\vdots \
 
-g(n-2)\\
+g(n-2)\
 
 g(n-1)\
 \end{bmatrix}\\]
