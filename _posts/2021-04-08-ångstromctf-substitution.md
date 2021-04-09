@@ -62,10 +62,7 @@ Knowing this, we can make a $$n \times n$$ linear system where the $$n$$th equat
 
 g(0) &\equiv x_{*0} \times 0^{n-1}+x\_{1} \times 0^{n-2}+...+x\_{n-2} \times 0+x{n-1} \pmod{691} \
 g(1) &\equiv x_{*0} \times 1^{n-1}+x\_{1} \times 1^{n-2}+...+x\_{n-2} \times 1+x_*{n-1} \pmod{691} \
-g(2) &\equiv x\_{0} \times 2^{n-1}+x\_{1} \times 2^{n-2}+...+x\_{n-2} \times 2+x\_*{n-1} \pmod{691} \
-
-& \vdots \
-g(n) &\equiv x_{*0} \times (n-1)^{n-1}+x\_{1} \times (n-1)^{n-2}+...+x\_{n-2} \times (n-1)+x*{n-1} \pmod{691}\
+g(2) &\equiv x\_{0} \times 2^{n-1}+x\_{1} \times 2^{n-2}+...+x\_{n-2} \times 2+x\_*{n-1} \pmod{691} \\
 \end{align*}$$
 
 \
