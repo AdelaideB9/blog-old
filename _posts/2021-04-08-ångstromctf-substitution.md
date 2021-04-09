@@ -58,12 +58,15 @@ where $$k$$ is the user input, $$x$$ is the previous result and $$y$$ is the nex
 \
 where $$x\_{n}$$ is the $$n$$th character of the flag. To test our understanding, let us evaluate $$g(0)$$. As per $$g(k)$$, we should have $$g(0)=x\_{n-1}$$. In other words, we should get the last letter of the flag, hence we should get the ASCII value of *}*. Connecting to the server and trying it, we indeed get $$125$$.\
 \
-Knowing this, we can make a $$n \times n$$ linear system where the $$n$$th equation is the equation $$g(n)$$. \\[\begin{align*}
+Knowing this, we can make a $$n \times n$$ linear system where the $$n$$th equation is the equation $$g(n)$$. $$\begin{align*}
 
 g(0) &\equiv x_{*0} \times 0^{n-1}+x\_{1} \times 0^{n-2}+...+x\_{n-2} \times 0+x{n-1} \pmod{691} \
 g(1) &\equiv x_{*0} \times 1^{n-1}+x\_{1} \times 1^{n-2}+...+x\_{n-2} \times 1+x_*{n-1} \pmod{691} \
-g(2) &\equiv x\_{0} \times 2^{n-1}+x\_{1} \times 2^{n-2}+...+x\_{n-2} \times 2+x\_*{n-1} \pmod{691} \\
-\end{align*}\\]
+g(2) &\equiv x\_{0} \times 2^{n-1}+x\_{1} \times 2^{n-2}+...+x\_{n-2} \times 2+x\_*{n-1} \pmod{691} \
+
+& \vdots \
+g(n) &\equiv x_{*0} \times (n-1)^{n-1}+x\_{1} \times (n-1)^{n-2}+...+x\_{n-2} \times (n-1)+x*{n-1} \pmod{691}\
+\end{align*}$$
 
 \
 This can be expressed as:
