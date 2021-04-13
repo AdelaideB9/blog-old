@@ -82,17 +82,13 @@ where A is the coefficient matrix:\
 \
 and B is the outputs for each given input:
 
-\begin{bmatrix}\
-g(0) \
-
-g(1) \
-
-\vdots \
-
-g(n-2)\
-
+\[ \begin{bmatrix}\
+g(0) \\
+g(1) \\
+\vdots \\
+g(n-2)\\
 g(n-1)\
-\end{bmatrix}
+\end{bmatrix}\]
 
 \
 and $$X$$ is the matrix of characters (essentially the flag).
