@@ -51,15 +51,14 @@ def substitute(value):
 \
 After researching what the reduce function does, we see that we are essentially recursively calling 
 
-\\[f(x,y) = kx+y\]
+$$f(x,y) = kx+y$$
 
 where $$k$$ is the user input, $$x$$ is the previous result and $$y$$ is the next character in the flag. As $$f$$ is a linear function, we can produce the following linear equation.\
-\\[g(k) \equiv x\_{0} k^{n-1}+x\_{2} k^{n-2}+...+x\_{n-2} k+x\_{n-1} \pmod{691}\]\
+$$g(k) \equiv x\_{0} k^{n-1}+x\_{2} k^{n-2}+...+x\_{n-2} k+x\_{n-1} \pmod{691}$$\
 \
 where $$x\_{n}$$ is the $$n$$th character of the flag. To test our understanding, let us evaluate $$g(0)$$. As per $$g(k)$$, we should have $$g(0)=x\_{n-1}$$. In other words, we should get the last letter of the flag, hence we should get the ASCII value of *}*. Connecting to the server and trying it, we indeed get $$125$$.\
 \
-Knowing this, we can make a $$n \times n$$ linear system where the $$n$$th equation is the equation $$g(n)$$. $$\begin{align*}
-
+Knowing this, we can make a $$n \times n$$ linear system where the $$n$$th equation is the equation $$g(n)$$. $$\begin{align*}\
 g(0) &\equiv x*{*0} \times 0^{n-1}+x\_{1} \times 0^{n-2}+...+x\_{n-2} \times 0+x{n-1} \pmod{691} \
 g(1) &\equiv x*{*0} \times 1^{n-1}+x\_{1} \times 1^{n-2}+...+x\_{n-2} \times 1+x_*{n-1} \pmod{691} \
 g(2) &\equiv x\_{0} \times 2^{n-1}+x\_{1} \times 2^{n-2}+...+x\_{n-2} \times 2+x\_*{n-1} \pmod{691} \
@@ -71,24 +70,24 @@ This can be expressed as:
 $$A\textbf{X}=\textbf{B} \pmod{691}$$\
 \
 where A is the coefficient matrix:\
-\[ \begin{bmatrix}\
+\begin{bmatrix}\
 0^{n-1} & 0^{n-2} & \cdots & 0^{1} & 1 \
 1^{n-1} & 1^{n-2} & \cdots & 1^{1} & 1 \
 \vdots   &             &            &          &  \vdots  \
 (n-2)^{n-1} & (n-2)^{n-2} & \cdots & (n-2)^{1} & 1 \
 (n-1)^{n-1} & (n-1)^{n-2} & \cdots & (n-1)^{1} & 1\
-\end{bmatrix}\]
+\end{bmatrix}
 
 \
 and B is the outputs for each given input:
 
-\[ \begin{bmatrix}\
+\begin{bmatrix}\
 g(0) \\
 g(1) \\
 \vdots \\
 g(n-2)\\
 g(n-1)\
-\end{bmatrix}\]
+\end{bmatrix}
 
 \
 and $$X$$ is the matrix of characters (essentially the flag).
