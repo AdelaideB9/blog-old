@@ -57,20 +57,18 @@ where $$x\_n$$ is the $$n$$th character of the flag. To test our understanding, 
 
 Knowing this, we can make a $$n \times n$$ linear system where the $$n$$th equation is the equation $$g(n)$$. 
 
-$$\begin{align}g(0) &\equiv x_0 \times 0^{n-1}+ x\_1 \times 0^{n-2}+ ... +x\_{n-2} \times 0+x{n-1} \pmod{691} \\g(1) &\equiv x_0 \times 1^{n-1}+ x\_1 \times 1^{n-2}+ ... +x\_{n-2} \times 1+x_{n-1} \pmod{691} \\\
-g(2) &\equiv x_0 \times 2^{n-1}+ x\_1 \times 2^{n-2}+ ... +x\_{n-2} \times 2+x_{n-1} \pmod{691} \\
-\end{align}$$
+$$\begin{align}g(0) &\equiv x_0 \times 0^{n-1}+ x_1 \times 0^{n-2}+ ... +x_{n-2} \times 0+x{n-1} \pmod{691} \\g(1) &\equiv x_0 \times 1^{n-1}+ x_1 \times 1^{n-2}+ ... +x_{n-2} \times 1+x_{n-1} \pmod{691} \\\ g(2) &\equiv x_0 \times 2^{n-1}+ x_1 \times 2^{n-2}+ ... +x_{n-2} \times 2+x_{n-1} \pmod{691} \\ \end{align}$$
 
 This can be expressed as:
 
-$$A\textbf{X}=\textbf{B} \pmod{691}$$\
+$$A\textbf{X}=\textbf{B} \pmod{691}$$
 
 where A is the coefficient matrix:\
-\begin{bmatrix}\0^{n-1} & 0^{n-2} & \cdots & 0^{1} & 1 \\1^{n-1} & 1^{n-2} & \cdots & 1^{1} & 1 \\ \vdots   &             &            &          &  \vdots  \\(n-2)^{n-1} & (n-2)^{n-2} & \cdots & (n-2)^{1} & 1 \\(n-1)^{n-1} & (n-1)^{n-2} & \cdots & (n-1)^{1} & 1 \\ \end{bmatrix}
+\begin{bmatrix}0^{n-1} & 0^{n-2} & \cdots & 0^{1} & 1 \\1^{n-1} & 1^{n-2} & \cdots & 1^{1} & 1 \\ \vdots   &             &            &          &  \vdots  \\(n-2)^{n-1} & (n-2)^{n-2} & \cdots & (n-2)^{1} & 1 \\(n-1)^{n-1} & (n-1)^{n-2} & \cdots & (n-1)^{1} & 1 \\ \end{bmatrix}
 
 and B is the outputs for each given input:
 
-\begin{bmatrix}\g(0) \\g(1) \\ \vdots \\g(n-2) \\g(n-1) \\ \end{bmatrix}
+\begin{bmatrix}g(0) \\g(1) \\ \vdots \\g(n-2) \\g(n-1) \end{bmatrix}
 
 and $$X$$ is the matrix of characters (essentially the flag).
 
