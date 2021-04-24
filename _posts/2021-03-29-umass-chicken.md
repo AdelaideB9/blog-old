@@ -2,8 +2,7 @@
 layout: post
 title: Chicken - UMassCTF '21
 date: 2021-03-29T01:30:00
-authors:
-- samiko
+author: samiko
 categories:
 - ctf
 - write-ups

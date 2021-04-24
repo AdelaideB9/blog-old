@@ -5,11 +5,10 @@ date: 2021-03-29T10:25:04.919Z
 description: The breach seems to have originated from this host. Can you find
   the user's mistake? Here is a memory image of their workstation from that day.
 author: javad
-authors:
-  - authors: javad
 categories:
   - ctf
   - write-ups
+
 ---
 ## notes
 
