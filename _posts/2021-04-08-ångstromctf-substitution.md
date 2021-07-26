@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ångstromCTF - Substitution
+title: Substitution - ångstromCTF 2021
 date: 2021-04-08T13:12:52.939Z
 description: "A write up the the ångstromCTF crypto challenge substitution "
 author: lachlan
